@@ -9,7 +9,7 @@ import javax.print.Doc;
 import java.io.File;
 import java.io.IOException;
 
-public class MyCrawlingTes {
+public class MyCrawlerTes {
     @Test
     public void testCrawl() {
         ICrawler crawler = new Crawler(
