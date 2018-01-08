@@ -19,14 +19,13 @@ public class CrawlerTest {
 
     @Test
     public void CGVtest(){
-        String date = getDate();
-        String cgv_url = "http://www.cgv.co.kr/theaters/?areacode=206%2C04%2C06&theaterCode=0121" + "&date=" + date;
-
-        String httpdocument = crawler.crawl(new JsoupCralwer(),cgv_url);
-        System.out.println(httpdocument);
+        final String JEJU = "0121";
+        final String JEJU_NOHYENG = "0259";
+        String date = "&date=" + getDate();
+        String url = "http://www.cgv.co.kr/theaters/?areacode=206%2C04%2C06&theaterCode=" + JEJU + date;
 
         //html 소스 안에 CGV라는 문자열이 존재하면 대략적으로 통과한걸로
-        String httpdocument = crawler.crawl(new JsoupCralwer(),"http://www.cgv.co.kr/theaters/?areacode=206%2C04%2C06&theaterCode=0121","&date=20180108");
+        String httpdocument = crawler.crawl(new JsoupCralwer(),url);
 
         Assert.assertTrue(httpdocument.contains("CGV"));
     }
