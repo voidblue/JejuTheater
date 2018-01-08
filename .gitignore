@@ -20,3 +20,51 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# User-specific stuff:
+JejuTheater/.idea/**/workspace.xml
+JejuTheater/.idea/**/tasks.xml
+JejuTheater/.idea/dictionaries
+
+# Sensitive or high-churn files:
+JejuTheater/.idea/**/dataSources/
+JejuTheater/.idea/**/dataSources.ids
+JejuTheater/.idea/**/dataSources.xml
+JejuTheater/.idea/**/dataSources.local.xml
+JejuTheater/.idea/**/sqlDataSources.xml
+JejuTheater/.idea/**/dynamic.xml
+JejuTheater/.idea/**/uiDesigner.xml
+
+# Gradle:
+JejuTheater/.idea/**/gradle.xml
+JejuTheater/.idea/**/libraries
+
+# CMake
+cmake-build-debug/
+cmake-build-release/
+
+# Mongo Explorer plugin:
+.idea/**/mongoSettings.xml
+
+## File-based project format:
+*.iws
+
+## Plugin-specific files:
+
+# IntelliJ
+JejuTheater/out/
+
+# mpeltonen/sbt-idea plugin
+.idea_modules/
+
+# JIRA plugin
+atlassian-ide-plugin.xml
+
+# Cursive Clojure plugin
+.idea/replstate.xml
+
+# Crashlytics plugin (for Android Studio and IntelliJ)
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
