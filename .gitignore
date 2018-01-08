@@ -22,6 +22,7 @@
 hs_err_pid*
 
 # User-specific stuff:
+JejuTheater/.idea/**/misc.xml
 JejuTheater/.idea/**/workspace.xml
 JejuTheater/.idea/**/tasks.xml
 JejuTheater/.idea/dictionaries
