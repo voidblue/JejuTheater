@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class JunitCralwer implements Crawl{
+public class JsoupCralwer implements Crawl{
     @Override
     public String crawl(String url) {
         Document httpdocument = null;
