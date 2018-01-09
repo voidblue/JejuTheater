@@ -19,8 +19,8 @@ public class Crawler {
 
     }
 
-    public String crawl(Crawl crawler, String url, String dateFormat){
-        return crawler.crawl(url, dateFormat);
+    public String crawl(Crawl crawler, String url){
+        return crawler.crawl(url);
     }
 
 }

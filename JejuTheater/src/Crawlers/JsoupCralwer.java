@@ -8,17 +8,15 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class JunitCralwer implements Crawl{
+public class JsoupCralwer implements Crawl{
     @Override
-    public String crawl(String url, String dateformat) {
-        System.out.println(" Start Date : " + dateformat);
+    public String crawl(String url) {
         Document httpdocument = null;
         try {
-            httpdocument = (Document) Jsoup.connect(url + dateformat).get();
+            httpdocument = (Document) Jsoup.connect(url).get();
         }catch (IOException e){
             System.out.println(e.getMessage());
         }
-        System.out.println(" End Date : " + dateformat);
         return httpdocument.outerHtml();
     }
 }
