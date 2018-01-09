@@ -1,5 +1,5 @@
 package Interface;
 
 public interface Crawl {
-    String crawl(String url, String dateformat);
+    String crawl(String url);
 }
