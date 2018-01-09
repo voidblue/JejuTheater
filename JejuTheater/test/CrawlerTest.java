@@ -1,13 +1,10 @@
-package Test;
+package test;
 
 import Crawlers.JunitCralwer;
 import Utils.Crawler;
-import org.jsoup.nodes.Document;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import javax.swing.text.html.HTMLDocument;
 
 public class CrawlerTest {
     public static Crawler crawler;
