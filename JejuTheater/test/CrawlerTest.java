@@ -1,5 +1,6 @@
 import Crawlers.JsoupCralwer;
 import Utils.Crawler;
+import org.jsoup.nodes.Document;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -23,10 +24,10 @@ public class CrawlerTest {
         String url = "http://www.cgv.co.kr/common/showtimes/iframeTheater.aspx?areacode=206,04,06&theatercode=" + JEJU + date;
 
         //html 소스 안에 CGV라는 문자열이 존재하면 대략적으로 통과한걸로
-        String httpdocument = crawler.crawl(new JsoupCralwer(),url);
+        Document httpdocument = crawler.crawl(new JsoupCralwer(),url);
         System.out.println(httpdocument);
 
-        Assert.assertTrue(httpdocument.contains("CGV"));
+        Assert.assertTrue(httpdocument.text().contains("CGV"));
     }
 
     private String getDate()
