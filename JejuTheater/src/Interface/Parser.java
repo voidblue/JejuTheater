@@ -1,5 +1,5 @@
 package Interface;
 
 public interface Parser {
-    public String parse(String tag);
+    String parse(String tag);
 }
