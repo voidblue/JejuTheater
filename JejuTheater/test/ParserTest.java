@@ -16,7 +16,7 @@ public class ParserTest
         Document html = crawler.crawl(new JsoupCralwer(), "http://www.cgv.co.kr/");
 //        System.out.println(html);
 
-        SimpleParser parser = new SimpleParser(html);
+        SimpleParser parser = SimpleParser.getInstance(html);
         String result = parser.parse(".address address");
 
         Assert.assertTrue(result.equals("(04377)서울특별시 용산구 한강대로 23길 55, 아이파크몰 6층(한강로동)"));
