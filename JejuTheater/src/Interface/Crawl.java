@@ -1,5 +1,7 @@
 package Interface;
 
+import org.jsoup.nodes.Document;
+
 public interface Crawl {
-    String crawl(String url);
+    Document crawl(String url);
 }
