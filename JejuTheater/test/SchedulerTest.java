@@ -1,3 +1,4 @@
+import Interface.SchedulRunner;
 import Utils.Scheduler;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +16,11 @@ public class SchedulerTest {
     @Test
     public void runTest(){
         //Assert 테스트가 불가능
-        scheduler.run(()->{System.out.println(new Date().getSeconds());}, 5000);
+        scheduler.run(() -> {System.out.println(new Date().getSeconds());}
+        , 5000);
+
+
     }
 
 }
+
