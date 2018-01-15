@@ -12,11 +12,7 @@ public class JsoupParser implements Parsable {
     public JsoupParser(String html)
     {
         this.html = html;
-        this.document = this.getDocument();
-    }
-
-    private Document getDocument(){
-        return Jsoup.parse(this.html);
+        this.document = Jsoup.parse(this.html);
     }
 
     @Override
