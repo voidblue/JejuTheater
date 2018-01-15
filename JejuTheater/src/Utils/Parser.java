@@ -16,4 +16,8 @@ public class Parser {
     {
         return parser.parse(tag);
     }
+    public String parseInTag(String tag)
+    {
+        return parser.parseInTag(tag);
+    }
 }

@@ -4,6 +4,8 @@ import Interface.Parsable;
 import Utils.Parser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 public class JsoupParser implements Parsable {
     private String html;
@@ -18,6 +20,13 @@ public class JsoupParser implements Parsable {
     @Override
     public String parse(String tag) {
         String result = document.select(tag).text();
+        return result;
+    }
+
+    @Override
+    public String parseInTag(String tag)
+    {
+        String result = document.select(tag).html();
         return result;
     }
 }
