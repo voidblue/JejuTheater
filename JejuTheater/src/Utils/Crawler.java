@@ -19,7 +19,7 @@ public class Crawler {
 
     }
 
-    public Document crawl(Crawl crawler, String url){
+    public String crawl(Crawl crawler, String url){
         return crawler.crawl(url);
     }
 
