@@ -1,6 +1,6 @@
 package Interface;
 
 public interface Parsable {
-    String parse(String tag);
-    String parseToText(String tag);
+    String parse(String html, String tag);
+    String parseToText(String html, String tag);
 }

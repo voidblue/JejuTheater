@@ -11,12 +11,12 @@ public class Parser {
         this.parser = parser;
     }
 
-    public String parse(String tag)
+    public String parse(String html, String tag)
     {
-        return parser.parse(tag);
+        return parser.parse(html, tag);
     }
-    public String parseToText(String tag)
+    public String parseToText(String html, String tag)
     {
-        return parser.parseToText(tag);
+        return parser.parseToText(html, tag);
     }
 }
