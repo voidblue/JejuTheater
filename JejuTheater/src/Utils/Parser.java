@@ -1,7 +1,6 @@
 package Utils;
 
 import Interface.Parsable;
-import org.jsoup.nodes.Document;
 
 public class Parser {
     private Parsable parser;
@@ -16,8 +15,8 @@ public class Parser {
     {
         return parser.parse(tag);
     }
-    public String parseInTag(String tag)
+    public String parseToText(String tag)
     {
-        return parser.parseInTag(tag);
+        return parser.parseToText(tag);
     }
 }

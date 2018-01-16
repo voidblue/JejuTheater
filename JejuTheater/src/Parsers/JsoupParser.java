@@ -18,15 +18,15 @@ public class JsoupParser implements Parsable {
     }
 
     @Override
-    public String parse(String tag) {
+    public String parseToText(String tag) {
         String result = document.select(tag).text();
         return result;
     }
 
     @Override
-    public String parseInTag(String tag)
+    public String parse(String tag)
     {
-        String result = document.select(tag).html();
+        String result = document.select(tag).outerHtml();
         return result;
     }
 }
