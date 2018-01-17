@@ -38,14 +38,41 @@ public class CGVBringer implements Bring {
 
     private Schedules getSchedules(String theater)
     {
-        String date = getDate();
-        String url = "http://www.cgv.co.kr/common/showtimes/iframeTheater.aspx?areacode=206,04,06&theatercode=" + theater + "&date=" + date;
+        Schedules schedules = new Schedules();
+        String date = "&date=" + getDate();
+        String url = "http://www.cgv.co.kr/common/showtimes/iframeTheater.aspx?areacode=206,04,06&theatercode=" + JEJU + date;
         String html = crawler.crawl(new JsoupCralwer(), url);
 
-        Parser parser = Parser.getInstance(new JsoupParser(html));
-        String set = parser.parse(".sect-showtimes ul li:nth-child(1) .col-times");
-        System.out.println(set);
+        Parser parser = Parser.getInstance(new JsoupParser());
+        // TODO: 날짜 개수만큼 반복
+        String date_set = parser.parse(html, ".day a[title=\"현재 선택\"]");
+        String month = parser.parseToText(date_set, "span");
+        String day = parser.parseToText(date_set, "strong");
+        String day_of_week = parser.parseToText(date_set, "em");
 
+        // TODO: 영화 개수만큼 반복
+        String schedule_set = parser.parse(html, ".sect-showtimes ul li:nth-child(1) .col-times");
+        String movie_titie = parser.parseToText(schedule_set, ".info-movie a strong");
+
+        // TODO: 상영관 수만큼 반  복
+        String screen_set = parser.parse(schedule_set, "div:nth-child(2)");
+        String screen_number = parser.parseToText(screen_set, ".info-hall:nth-child(1) ul li:nth-child(2)");
+
+        // TODO: 상영시간 수만큼 반복
+        String time_set = parser.parse(screen_set, ".type-hall div:nth-child(2) ul li:nth-child(1)");
+        System.out.println(time_set);
+        String show_time = parser.parseToText(time_set, "em");
+        String seat_left = parser.parseToText(time_set, "span:not(.hidden)");
+        // TODO: ArrayList에 add
+
+        System.out.println("[결과]");
+        System.out.println(month);
+        System.out.println(day);
+        System.out.println(day_of_week);
+        System.out.println(movie_titie);
+        System.out.println(screen_number);
+        System.out.println(show_time);
+        System.out.println(seat_left);
         return null;
     }
 
