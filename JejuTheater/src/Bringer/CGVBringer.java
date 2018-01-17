@@ -51,28 +51,33 @@ public class CGVBringer implements Bring {
         String day_of_week = parser.parseToText(date_set, "em");
 
         // TODO: 영화 개수만큼 반복
-        String schedule_set = parser.parse(html, ".sect-showtimes ul li:nth-child(1) .col-times");
-        String movie_titie = parser.parseToText(schedule_set, ".info-movie a strong");
+        ArrayList schedule_set = parser.parseToList(html, ".sect-showtimes ul li .col-times");
+        for (int count_movie = 0; count_movie < schedule_set.size(); count_movie++) {
+            String movie_titie = parser.parseToText(schedule_set.get(count_movie).toString(), ".info-movie a strong");
 
-        // TODO: 상영관 수만큼 반  복
-        String screen_set = parser.parse(schedule_set, "div:nth-child(2)");
-        String screen_number = parser.parseToText(screen_set, ".info-hall:nth-child(1) ul li:nth-child(2)");
+            // 상영관 수만큼 반복
+            ArrayList screen_set = parser.parseToList(schedule_set.get(count_movie).toString(), ".col-times .type-hall");
+            for (int count_screen = 0; count_screen < screen_set.size(); count_screen++) {
+                String screen_number = parser.parseToText(screen_set.get(count_screen).toString(), ".info-hall ul li:nth-child(2)");
+                ArrayList time_set = parser.parseToList(screen_set.get(count_screen).toString(), ".type-hall div:nth-child(2) ul li");
 
-        // TODO: 상영시간 수만큼 반복
-        String time_set = parser.parse(screen_set, ".type-hall div:nth-child(2) ul li:nth-child(1)");
-        System.out.println(time_set);
-        String show_time = parser.parseToText(time_set, "em");
-        String seat_left = parser.parseToText(time_set, "span:not(.hidden)");
-        // TODO: ArrayList에 add
+                // 상영시간 수만큼 반복
+                for (int count_showtime = 0; count_showtime < time_set.size(); count_showtime++) {
+                    String show_time = parser.parseToText(time_set.get(count_showtime).toString(), "em");
+                    String seat_left = parser.parseToText(time_set.get(count_showtime).toString(), "span:not(.hidden)");
 
-        System.out.println("[결과]");
-        System.out.println(month);
-        System.out.println(day);
-        System.out.println(day_of_week);
-        System.out.println(movie_titie);
-        System.out.println(screen_number);
-        System.out.println(show_time);
-        System.out.println(seat_left);
+                    // TODO: ArrayList에 add
+                    System.out.print(month + "\t");
+                    System.out.print(day + "\t");
+                    System.out.print(day_of_week + "\t");
+                    System.out.print(movie_titie + "\t");
+                    System.out.print(screen_number + "\t");
+                    System.out.print(show_time + "\t");
+                    System.out.print(seat_left + "\n");
+                }
+                System.out.println("--------------------------------------------------");
+            }
+        }
         return null;
     }
 
