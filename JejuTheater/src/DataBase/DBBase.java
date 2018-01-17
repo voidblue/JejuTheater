@@ -7,7 +7,7 @@ abstract class DBBase {
     private Connection connection = null;
 
     DBBase() {
-        final String ServerUrl = "jdbc:mysql://54.199.161.232:3306/비밀";
+        final String ServerUrl = "jdbc:mysql://54.199.161.232:3306/비밀?characterEncoding=euckr";
         final String ServerID = "비밀";
         final String ServerPW = "비밀";
         try {
@@ -40,14 +40,21 @@ abstract class DBBase {
         return null;
     }
 
-    protected void execute(String query){
+    protected void execute(String updatequery, String insertquery){
         PreparedStatement pstmt = null;
         int result = 0;
         try {
-            pstmt = connection.prepareStatement(query);
+            pstmt = connection.prepareStatement(updatequery);
             result = pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }finally {
+            try {
+                pstmt = connection.prepareStatement(insertquery);
+                result = pstmt.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         System.out.println(result);
