@@ -7,9 +7,9 @@ abstract class DBBase {
     private Connection connection = null;
 
     DBBase() {
-        final String ServerUrl = "jdbc:mysql://54.199.161.232:3306/[DBname]";
-        final String ServerID = "ID";
-        final String ServerPW = "password";
+        final String ServerUrl = "jdbc:mysql://54.199.161.232:3306/비밀";
+        final String ServerID = "비밀";
+        final String ServerPW = "비밀";
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -29,7 +29,7 @@ abstract class DBBase {
 // stmt = connection.createStatement();
 // rs = stmt.excuteQuery(query);
 
-    protected ResultSet executeQuery(String query){
+    protected ResultSet Select(String query){
         PreparedStatement pstmt = null;
         try {
             pstmt = connection.prepareStatement(query);
@@ -38,5 +38,18 @@ abstract class DBBase {
             e.printStackTrace();
         }
         return null;
+    }
+
+    protected void execute(String query){
+        PreparedStatement pstmt = null;
+        int result = 0;
+        try {
+            pstmt = connection.prepareStatement(query);
+            result = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(result);
     }
 }

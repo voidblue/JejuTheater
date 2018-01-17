@@ -2,17 +2,18 @@ package DataBase;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 public class DBGetter extends DBBase{
-    private static String QUERY = "SELECT * FROM tablename";
-    private ResultSet resultSet;
+    private static String QUERY = "SELECT * FROM brands";
+    public ResultSet resultSet;
 
     public static DBGetter getInstance(){
         return new DBGetter();
     }
 
     private DBGetter(){
-        resultSet = executeQuery(QUERY);
+        resultSet = Select(QUERY);
     }
 
     //
@@ -26,12 +27,11 @@ public class DBGetter extends DBBase{
 
 
 
-
-    //TODO 지워야할 함수
-    public void TEST(){
+    public static void main(String args[]){
+        DBGetter dbGetter = DBGetter.getInstance();
         try {
-            resultSet.absolute(2);
-            System.out.println(resultSet.getInt(3));
+            dbGetter.resultSet.absolute(3);
+            System.out.println(dbGetter.resultSet.getString("moviename"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
