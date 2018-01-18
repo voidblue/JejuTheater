@@ -2,6 +2,7 @@ package Bringer;
 
 import Crawlers.JsoupCralwer;
 import Interface.Bring;
+import Interface.Crawl;
 import Parsers.JsoupParser;
 import TheaterData.Movies;
 import TheaterData.Schedules;
@@ -28,8 +29,8 @@ public class CGVBringer implements Bring {
         ArrayList<ArrayList> lists = new ArrayList<>();
 
         // TODO: 반복문으로 구현
-        lists.add(getSchedules(JEJU));
         lists.add(getMovies(JEJU));
+        lists.add(getSchedules(JEJU));
 //        lists.add(getSchedules(JEJU_NOHYENG));
 //        lists.add(getMovies(JEJU_NOHYENG));
 
@@ -50,7 +51,7 @@ public class CGVBringer implements Bring {
         String day = parser.parseToText(date_set, "strong");
         String day_of_week = parser.parseToText(date_set, "em");
 
-        // TODO: 영화 개수만큼 반복
+        // 영화 개수만큼 반복
         ArrayList schedule_set = parser.parseToList(html, ".sect-showtimes ul li .col-times");
         for (int count_movie = 0; count_movie < schedule_set.size(); count_movie++) {
             String movie_titie = parser.parseToText(schedule_set.get(count_movie).toString(), ".info-movie a strong");
@@ -67,15 +68,15 @@ public class CGVBringer implements Bring {
                     String seat_left = parser.parseToText(time_set.get(count_showtime).toString(), "span:not(.hidden)");
 
                     // TODO: ArrayList에 add
-                    System.out.print(month + "\t");
-                    System.out.print(day + "\t");
-                    System.out.print(day_of_week + "\t");
-                    System.out.print(movie_titie + "\t");
-                    System.out.print(screen_number + "\t");
-                    System.out.print(show_time + "\t");
-                    System.out.print(seat_left + "\n");
+//                    System.out.print(month + "\t");
+//                    System.out.print(day + "\t");
+//                    System.out.print(day_of_week + "\t");
+//                    System.out.print(movie_titie + "\t");
+//                    System.out.print(screen_number + "\t");
+//                    System.out.print(show_time + "\t");
+//                    System.out.print(seat_left + "\n");
                 }
-                System.out.println("--------------------------------------------------");
+//                System.out.println("--------------------------------------------------");
             }
         }
         return null;
@@ -83,8 +84,29 @@ public class CGVBringer implements Bring {
 
     private Movies getMovies(String theater)
     {
+        Crawler crawler = Crawler.getInstance();
+        String html = crawler.crawl(new JsoupCralwer(), "http://www.cgv.co.kr/movies/?lt=1&ft=1");
+        String[] ids = getIds(html);
+
+        Parser parser = Parser.getInstance(new JsoupParser());
 
         return null;
+    }
+
+    private String[] getIds(String html)
+    {
+        Parser parser = Parser.getInstance(new JsoupParser());
+        ArrayList movielist = parser.parseToList(html, ".sect-movie-chart .box-contents a:not(.link-reservation)");
+        String[] ids = new String[movielist.size()];
+
+        for (int i = 0; i < movielist.size(); i++)
+        {
+            String str = movielist.get(i).toString();
+            String href = parser.getAttr(str, "a", "href");
+            ids[i] = href.substring(href.length()-5);
+        }
+
+        return ids;
     }
 
     private String getDate()

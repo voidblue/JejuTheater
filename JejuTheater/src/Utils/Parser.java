@@ -22,4 +22,5 @@ public class Parser {
         return parser.parseToText(html, tag);
     }
     public ArrayList parseToList(String html, String tag) { return parser.parseToList(html, tag); }
+    public String getAttr(String html, String tag, String attr) { return parser.getAttr(html, tag, attr); }
 }
