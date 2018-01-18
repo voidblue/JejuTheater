@@ -16,12 +16,14 @@ import java.util.GregorianCalendar;
 
 public class CGVBringer implements Bring {
     private Crawler crawler;
+    private Parser parser;
     public final String JEJU = "0121";
     public final String JEJU_NOHYENG = "0259";
 
     public CGVBringer()
     {
         this.crawler = Crawler.getInstance();
+        this.parser = Parser.getInstance(new JsoupParser());
     }
 
     @Override
@@ -44,7 +46,6 @@ public class CGVBringer implements Bring {
         String url = "http://www.cgv.co.kr/common/showtimes/iframeTheater.aspx?areacode=206,04,06&theatercode=" + JEJU + date;
         String html = crawler.crawl(new JsoupCralwer(), url);
 
-        Parser parser = Parser.getInstance(new JsoupParser());
         // TODO: 날짜 개수만큼 반복
         String date_set = parser.parse(html, ".day a[title=\"현재 선택\"]");
         String month = parser.parseToText(date_set, "span");
@@ -85,12 +86,42 @@ public class CGVBringer implements Bring {
     private Movies getMovies(String theater)
     {
         Crawler crawler = Crawler.getInstance();
+
         String html = crawler.crawl(new JsoupCralwer(), "http://www.cgv.co.kr/movies/?lt=1&ft=1");
         String[] ids = getIds(html);
 
-        Parser parser = Parser.getInstance(new JsoupParser());
+        // TODO: id 개수만큼 반복
+        int i = 0;
+        String url_pro = "http://www.cgv.co.kr/movies/detail-view/?midx=";
+        String html_movie = crawler.crawl(new JsoupCralwer(), url_pro + ids[i]);
+
+        String title = parseToText(html_movie,".title strong");
+        String title_en = parseToText(html_movie, ".title p");
+        String genre = parseToText(html_movie, ".spec dt:nth-of-type(3)").substring(5);
+        String storyline = parseToText(html_movie, ".sect-story-movie");
+        String release_date = parseToText(html_movie, ".spec .on:last-of-type");
+        String info = parseToText(html_movie, ".spec .on:nth-last-of-type(2)");
+        String age_limit = info.substring(0, 6);//
+        String running_time = info.substring(8, 12);
+        String score = parseToText(html_movie, ".score .percent span:not(.percent)");
+        String ticket_sales = parseToText(html_movie, ".egg-gage:first-of-type .percent");
+
+        System.out.println(title);
+        System.out.println(title_en);
+        System.out.println(genre);
+        System.out.println(storyline);
+        System.out.println(release_date);
+        System.out.println(age_limit);
+        System.out.println(running_time);
+        System.out.println(score);
+        System.out.println(ticket_sales);
 
         return null;
+    }
+
+    private String parseToText(String html, String tag)
+    {
+        return parser.parseToText(html, tag);
     }
 
     private String[] getIds(String html)
