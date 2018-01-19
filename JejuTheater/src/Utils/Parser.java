@@ -1,7 +1,8 @@
 package Utils;
 
 import Interface.Parsable;
-import org.jsoup.nodes.Document;
+
+import java.util.ArrayList;
 
 public class Parser {
     private Parsable parser;
@@ -12,8 +13,14 @@ public class Parser {
         this.parser = parser;
     }
 
-    public String parse(String tag)
+    public String parse(String html, String tag)
     {
-        return parser.parse(tag);
+        return parser.parse(html, tag);
     }
+    public String parseToText(String html, String tag)
+    {
+        return parser.parseToText(html, tag);
+    }
+    public ArrayList parseToList(String html, String tag) { return parser.parseToList(html, tag); }
+    public String getAttr(String html, String tag, String attr) { return parser.getAttr(html, tag, attr); }
 }
