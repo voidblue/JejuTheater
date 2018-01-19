@@ -32,8 +32,8 @@ public class CGVBringer implements Bring {
 
         lists.add(getMovies(JEJU));
         lists.add(getSchedules(JEJU));
-        lists.add(getSchedules(JEJU_NOHYENG));
         lists.add(getMovies(JEJU_NOHYENG));
+        lists.add(getSchedules(JEJU_NOHYENG));
 
         return lists;
     }
@@ -41,50 +41,50 @@ public class CGVBringer implements Bring {
     private Schedules getSchedules(String theater)
     {
         Schedules schedules = new Schedules();
-        String date = getDate();
-        String url = "" +
-                "http://www.cgv.co.kr/common/showtimes/iframeTheater.aspx?areacode=206,04,06&theatercode="
-                + theater + "&date=" + date;
-        String html = crawler.crawl(new JsoupCralwer(), url);
+        int repetitions = 0;
 
-        // TODO: 날짜 개수만큼 반복
-        String date_set = parse(html, ".day a[title=\"현재 선택\"]");
-        String month, day, day_of_week;
+        // 날짜 개수만큼 반복
+        while(true) {
+            String date = getDate(repetitions++);
+            String url = "" +
+                    "http://www.cgv.co.kr/common/showtimes/iframeTheater.aspx?areacode=206,04,06&theatercode="
+                    + theater + "&date=" + date;
+            String html = crawler.crawl(new JsoupCralwer(), url);
 
-        month = parseToText(date_set, "span");
-        day = parseToText(date_set, "strong");
-        day_of_week = parseToText(date_set, "em");
+            String date_set = parse(html, ".day a[title=\"현재 선택\"]");
+            String month, day, day_of_week;
 
-        // 영화 개수만큼 반복
-        ArrayList schedule_set = parseToList(html, ".sect-showtimes ul li .col-times");
-        for (int count_movie = 0; count_movie < schedule_set.size(); count_movie++) {
-            String movie_titie
-                    = parseToText(getTarget(schedule_set, count_movie), ".info-movie a strong");
-            ArrayList screen_set
-                    = parseToList(getTarget(schedule_set, count_movie), ".col-times .type-hall");
+            month = parseToText(date_set, "span");
+            day = parseToText(date_set, "strong");
+            day_of_week = parseToText(date_set, "em");
 
-            // 상영관 수만큼 반복
-            for (int count_screen = 0; count_screen < screen_set.size(); count_screen++) {
-                String screen_number
-                        = parseToText(getTarget(screen_set, count_screen), ".info-hall ul li:nth-child(2)");
-                ArrayList time_set
-                        = parseToList(getTarget(screen_set, count_screen),
-                        ".type-hall div:nth-child(2) ul li");
+            if (!isEqualDate(date, month, day)) break;
 
-                // 상영시간 수만큼 반복
-                for (int count_showtime = 0; count_showtime < time_set.size(); count_showtime++) {
-                    String show_time
-                            = parseToText(getTarget(time_set, count_showtime), "em");
-                    String seat_left
-                            = parseToText(getTarget(time_set, count_showtime), "span:not(.hidden)");
+            // 영화 개수만큼 반복
+            String target;
+            ArrayList schedule_set = parseToList(html, ".sect-showtimes ul li .col-times");
+            for (int count_movie = 0; count_movie < schedule_set.size(); count_movie++) {
+                target = getTarget(schedule_set, count_movie);
+                String movie_titie = parseToText(target, ".info-movie a strong");
+                ArrayList screen_set = parseToList(target, ".col-times .type-hall");
 
-                    // TODO: ArrayList에 add
-                    System.out.println(month + day + day_of_week + movie_titie + screen_number + show_time + seat_left);
+                // 상영관 수만큼 반복
+                for (int count_screen = 0; count_screen < screen_set.size(); count_screen++) {
+                    target = getTarget(screen_set, count_screen);
+                    String screen_number = parseToText(target, ".info-hall ul li:nth-child(2)");
+                    ArrayList time_set = parseToList(target,".type-hall div:nth-child(2) ul li");
+
+                    // 상영시간 수만큼 반복
+                    for (int count_showtime = 0; count_showtime < time_set.size(); count_showtime++) {
+                        target = getTarget(time_set, count_showtime);
+                        String show_time = parseToText(target, "em");
+                        String seat_left = parseToText(target, "span:not(.hidden)");
+
+                        // TODO: ArrayList에 add
+                    }
                 }
-                System.out.println("***********************************************");
             }
         }
-        System.out.println("=====================================================");
 
         return null;
     }
@@ -154,13 +154,22 @@ public class CGVBringer implements Bring {
         return ids;
     }
 
-    private String getDate()
+    private String getDate(int repetitions)
     {
         Calendar c1 = new GregorianCalendar();
+        c1.add(Calendar.DATE, repetitions);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd"); // 날짜 포맷
         String date = sdf.format(c1.getTime()); // String으로 저장
 
         return date;
     }
 
+    private boolean isEqualDate(String date, String month, String day)
+    {
+        String input_date = date.substring(4);
+        String schedule_date = month.substring(0, 2) + day;
+        boolean result = input_date.equals(schedule_date);
+
+        return result;
+    }
 }
