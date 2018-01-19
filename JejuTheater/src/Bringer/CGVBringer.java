@@ -30,11 +30,10 @@ public class CGVBringer implements Bring {
     public ArrayList<ArrayList> bring() {
         ArrayList<ArrayList> lists = new ArrayList<>();
 
-        // TODO: 반복문으로 구현
         lists.add(getMovies(JEJU));
         lists.add(getSchedules(JEJU));
-//        lists.add(getSchedules(JEJU_NOHYENG));
-//        lists.add(getMovies(JEJU_NOHYENG));
+        lists.add(getSchedules(JEJU_NOHYENG));
+        lists.add(getMovies(JEJU_NOHYENG));
 
         return lists;
     }
@@ -42,44 +41,51 @@ public class CGVBringer implements Bring {
     private Schedules getSchedules(String theater)
     {
         Schedules schedules = new Schedules();
-        String date = "&date=" + getDate();
-        String url = "http://www.cgv.co.kr/common/showtimes/iframeTheater.aspx?areacode=206,04,06&theatercode=" + JEJU + date;
+        String date = getDate();
+        String url = "" +
+                "http://www.cgv.co.kr/common/showtimes/iframeTheater.aspx?areacode=206,04,06&theatercode="
+                + theater + "&date=" + date;
         String html = crawler.crawl(new JsoupCralwer(), url);
 
         // TODO: 날짜 개수만큼 반복
-        String date_set = parser.parse(html, ".day a[title=\"현재 선택\"]");
-        String month = parser.parseToText(date_set, "span");
-        String day = parser.parseToText(date_set, "strong");
-        String day_of_week = parser.parseToText(date_set, "em");
+        String date_set = parse(html, ".day a[title=\"현재 선택\"]");
+        String month, day, day_of_week;
+
+        month = parseToText(date_set, "span");
+        day = parseToText(date_set, "strong");
+        day_of_week = parseToText(date_set, "em");
 
         // 영화 개수만큼 반복
-        ArrayList schedule_set = parser.parseToList(html, ".sect-showtimes ul li .col-times");
+        ArrayList schedule_set = parseToList(html, ".sect-showtimes ul li .col-times");
         for (int count_movie = 0; count_movie < schedule_set.size(); count_movie++) {
-            String movie_titie = parser.parseToText(schedule_set.get(count_movie).toString(), ".info-movie a strong");
+            String movie_titie
+                    = parseToText(getTarget(schedule_set, count_movie), ".info-movie a strong");
+            ArrayList screen_set
+                    = parseToList(getTarget(schedule_set, count_movie), ".col-times .type-hall");
 
             // 상영관 수만큼 반복
-            ArrayList screen_set = parser.parseToList(schedule_set.get(count_movie).toString(), ".col-times .type-hall");
             for (int count_screen = 0; count_screen < screen_set.size(); count_screen++) {
-                String screen_number = parser.parseToText(screen_set.get(count_screen).toString(), ".info-hall ul li:nth-child(2)");
-                ArrayList time_set = parser.parseToList(screen_set.get(count_screen).toString(), ".type-hall div:nth-child(2) ul li");
+                String screen_number
+                        = parseToText(getTarget(screen_set, count_screen), ".info-hall ul li:nth-child(2)");
+                ArrayList time_set
+                        = parseToList(getTarget(screen_set, count_screen),
+                        ".type-hall div:nth-child(2) ul li");
 
                 // 상영시간 수만큼 반복
                 for (int count_showtime = 0; count_showtime < time_set.size(); count_showtime++) {
-                    String show_time = parser.parseToText(time_set.get(count_showtime).toString(), "em");
-                    String seat_left = parser.parseToText(time_set.get(count_showtime).toString(), "span:not(.hidden)");
+                    String show_time
+                            = parseToText(getTarget(time_set, count_showtime), "em");
+                    String seat_left
+                            = parseToText(getTarget(time_set, count_showtime), "span:not(.hidden)");
 
                     // TODO: ArrayList에 add
-//                    System.out.print(month + "\t");
-//                    System.out.print(day + "\t");
-//                    System.out.print(day_of_week + "\t");
-//                    System.out.print(movie_titie + "\t");
-//                    System.out.print(screen_number + "\t");
-//                    System.out.print(show_time + "\t");
-//                    System.out.print(seat_left + "\n");
+                    System.out.println(month + day + day_of_week + movie_titie + screen_number + show_time + seat_left);
                 }
-//                System.out.println("--------------------------------------------------");
+                System.out.println("***********************************************");
             }
         }
+        System.out.println("=====================================================");
+
         return null;
     }
 
@@ -90,38 +96,46 @@ public class CGVBringer implements Bring {
         String html = crawler.crawl(new JsoupCralwer(), "http://www.cgv.co.kr/movies/?lt=1&ft=1");
         String[] ids = getIds(html);
 
-        // TODO: id 개수만큼 반복
-        int i = 0;
-        String url_pro = "http://www.cgv.co.kr/movies/detail-view/?midx=";
-        String html_movie = crawler.crawl(new JsoupCralwer(), url_pro + ids[i]);
+        // id 개수만큼 반복
+        for (int i = 0; i < ids.length; i++) {
+            String url_pro = "http://www.cgv.co.kr/movies/detail-view/?midx=";
+            String html_movie = crawler.crawl(new JsoupCralwer(), url_pro + ids[i]);
 
-        String title = parseToText(html_movie,".title strong");
-        String title_en = parseToText(html_movie, ".title p");
-        String genre = parseToText(html_movie, ".spec dt:nth-of-type(3)").substring(5);
-        String storyline = parseToText(html_movie, ".sect-story-movie");
-        String release_date = parseToText(html_movie, ".spec .on:last-of-type");
-        String info = parseToText(html_movie, ".spec .on:nth-last-of-type(2)");
-        String age_limit = info.substring(0, 6);//
-        String running_time = info.substring(8, 12);
-        String score = parseToText(html_movie, ".score .percent span:not(.percent)");
-        String ticket_sales = parseToText(html_movie, ".egg-gage:first-of-type .percent");
+            String title = parseToText(html_movie, ".title strong");
+            String title_en = parseToText(html_movie, ".title p");
+            String genre = parseToText(html_movie, ".spec dt:nth-last-of-type(3)").substring(5);
+            String storyline = parseToText(html_movie, ".sect-story-movie");
+            String release_date = parseToText(html_movie, ".spec .on:last-of-type");
+            String basic = parseToText(html_movie, ".spec .on:nth-last-of-type(2)");
+            String age_limit = basic.split(",")[0];
+            String running_time = basic.split(",")[1].substring(1);
+            String score = parseToText(html_movie, ".score .percent span:not(.percent)");
+            String ticket_sales = parseToText(html_movie, ".egg-gage:first-of-type .percent");
 
-        System.out.println(title);
-        System.out.println(title_en);
-        System.out.println(genre);
-        System.out.println(storyline);
-        System.out.println(release_date);
-        System.out.println(age_limit);
-        System.out.println(running_time);
-        System.out.println(score);
-        System.out.println(ticket_sales);
+            // TODO: ArrayList에 add
 
+        }
         return null;
     }
 
     private String parseToText(String html, String tag)
     {
         return parser.parseToText(html, tag);
+    }
+
+    private String parse(String html, String tag)
+    {
+        return parser.parse(html, tag);
+    }
+
+    private ArrayList parseToList(String html, String tag)
+    {
+        return parser.parseToList(html, tag);
+    }
+
+    private String getTarget(ArrayList list, int count)
+    {
+        return list.get(count).toString();
     }
 
     private String[] getIds(String html)
