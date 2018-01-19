@@ -30,21 +30,23 @@ public class CGVBringer implements Bring {
     public ArrayList<ArrayList> bring() {
         ArrayList<ArrayList> lists = new ArrayList<>();
 
-        lists.add(getMovies(JEJU));
+        lists.add(getMovies());
         lists.add(getSchedules(JEJU));
-        lists.add(getMovies(JEJU_NOHYENG));
         lists.add(getSchedules(JEJU_NOHYENG));
 
         return lists;
     }
 
-    private Schedules getSchedules(String theater)
+    private ArrayList<ArrayList> getSchedules(String theater)
     {
-        Schedules schedules = new Schedules();
+        ArrayList<ArrayList> alldaySchedules = new ArrayList<ArrayList>();
+        String theater_name = getTheaterName(theater);
         int repetitions = 0;
 
         // 날짜 개수만큼 반복
         while(true) {
+            ArrayList<Schedules> onedaySchedules = new ArrayList<Schedules>();
+
             String date = getDate(repetitions++);
             String url = "" +
                     "http://www.cgv.co.kr/common/showtimes/iframeTheater.aspx?areacode=206,04,06&theatercode="
@@ -80,18 +82,21 @@ public class CGVBringer implements Bring {
                         String show_time = parseToText(target, "em");
                         String seat_left = parseToText(target, "span:not(.hidden)");
 
-                        // TODO: ArrayList에 add
+                        // ArrayList에 add (-> onedaySchedules)
+                        onedaySchedules.add(new Schedules(theater_name, screen_number, month, day, day_of_week, show_time, movie_titie, seat_left));
                     }
                 }
             }
+            // ArrayList에 add (-> alldaySchedules)
+            alldaySchedules.add(onedaySchedules);
         }
 
-        return null;
+        return alldaySchedules;
     }
 
-    private Movies getMovies(String theater)
+    private ArrayList<Movies> getMovies()
     {
-        Crawler crawler = Crawler.getInstance();
+        ArrayList<Movies> movies = new ArrayList<Movies>();
 
         String html = crawler.crawl(new JsoupCralwer(), "http://www.cgv.co.kr/movies/?lt=1&ft=1");
         String[] ids = getIds(html);
@@ -113,9 +118,9 @@ public class CGVBringer implements Bring {
             String ticket_sales = parseToText(html_movie, ".egg-gage:first-of-type .percent");
 
             // TODO: ArrayList에 add
-
+            movies.add(new Movies(title, title_en, genre, storyline, release_date, age_limit, score, ticket_sales));
         }
-        return null;
+        return movies;
     }
 
     private String parseToText(String html, String tag)
@@ -171,5 +176,16 @@ public class CGVBringer implements Bring {
         boolean result = input_date.equals(schedule_date);
 
         return result;
+    }
+
+    private String getTheaterName(String theater)
+    {
+        String theaterName;
+
+        if (theater.equals(JEJU)) theaterName = "제주점";
+        else if (theater.equals(JEJU_NOHYENG)) theaterName = "제주노형점";
+        else theaterName = "";
+
+        return theaterName;
     }
 }
