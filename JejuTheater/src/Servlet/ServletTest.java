@@ -1,5 +1,5 @@
 package Servlet;
-
+/*
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -60,3 +60,4 @@ public class ServletTest extends HttpServlet {
 ////        doGet(request, response);
 //    }
 }
+*/

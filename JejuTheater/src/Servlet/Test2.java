@@ -4,7 +4,7 @@
  * Copyright www.gurubee.net All rights Reserved.
  */
 package Servlet;
-
+/*
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author : oramaster
  *
- */
+ *
 public class Test2 extends HttpServlet {
 
     // 대부분의 Servlet은 doGet 또는 doPost만 작성하며,
@@ -44,3 +44,5 @@ public class Test2 extends HttpServlet {
         out.println("</BODY></HTML>");
     }
 }
+
+*/
