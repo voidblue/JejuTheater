@@ -17,6 +17,7 @@ public class Parser {
     {
         return parser.parse(html, tag);
     }
+
     public String parseToText(String html, String tag)
     {
         return parser.parseToText(html, tag);
