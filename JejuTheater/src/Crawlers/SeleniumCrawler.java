@@ -31,13 +31,14 @@ public class SeleniumCrawler implements Crawl {
         String path = System.getProperty("user.dir");
         System.setProperty("webdriver.gecko.driver", path + "/driver/geckodriver");
 
+
         System.out.println(path);
 
         firefoxBinary.addCommandLineOptions("--headless");
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         firefoxOptions.setBinary(firefoxBinary);
         driver = new FirefoxDriver(firefoxOptions);
-
+//        driver = new FirefoxDriver();
     }
 
     @Override

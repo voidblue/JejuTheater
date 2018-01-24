@@ -145,7 +145,7 @@ public class CGVBringer implements Bring {
 
             String dtTemp = parseToText(html_movie, ".spec dt");
             String TempString = dtTemp.split("장르 : ")[1];
-            String genre = TempString.split(" ")[0];
+            String genre = TempString.split(" /")[0];
             String storyline = parseToText(html_movie, ".sect-story-movie");
             storyline = storyline.replace("'" , "\\\'");
             String release_date = parseToText(html_movie, ".spec .on");

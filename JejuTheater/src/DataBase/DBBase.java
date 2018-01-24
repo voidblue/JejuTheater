@@ -10,9 +10,9 @@ abstract class DBBase {
     private Connection connection = null;
 
     DBBase() {
-        final String ServerUrl = "jdbc:mysql://54.199.161.232:3306/jejutheater?characterEncoding=euckr";
-        final String ServerID = "son";
-        final String ServerPW = "kakao123";
+        final String ServerUrl = "jdbc:mysql://54.199.161.232:3306/비밀?characterEncoding=euckr";
+        final String ServerID = "비밀";
+        final String ServerPW = "비밀";
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
