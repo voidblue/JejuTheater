@@ -24,36 +24,4 @@ public class Schedules extends ArrayList {
         add(movie_title);
         add(brand);
     }
-
-    public String getTheater() {
-        return theater;
-    }
-
-    public String getMonth() {
-        return month;
-    }
-
-    public String getDay() {
-        return day;
-    }
-
-    public String getDay_of_week() {
-        return day_of_week;
-    }
-
-    public String getMovie_title() {
-        return movie_title;
-    }
-
-    public String getScreen_number() {
-        return screen_number;
-    }
-
-    public String getShow_time() {
-        return show_time;
-    }
-
-    public String getSeat_left() {
-        return seat_left;
-    }
 }
