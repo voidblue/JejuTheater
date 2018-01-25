@@ -44,6 +44,7 @@ public class CGVBringer implements Bring {
 
     private ArrayList<ArrayList> getSchedules(String theater)
     {
+        System.out.println("Schedule 받는 중 ... ");
         ArrayList<ArrayList> alldaySchedules = new ArrayList<ArrayList>();
         String theater_name = getTheaterName(theater);
         int repetitions = 0;
@@ -131,6 +132,7 @@ public class CGVBringer implements Bring {
 
     private ArrayList<Movies> getMovies()
     {
+        System.out.println("Movie 받는 중 ... ");
         ArrayList<Movies> movies = new ArrayList<Movies>();
 
         String html = crawler.crawl(new SeleniumCrawler((driver) ->{
@@ -178,12 +180,24 @@ public class CGVBringer implements Bring {
 
             String ticket_sales = parseToText(html_movie, ".score .percent span:not(.percent)");
 
-            // TODO: ArrayList에 add
+            // ' 처리
+            title = changeQuote(title);
+            title_en = changeQuote(title_en);
+            storyline = changeQuote(storyline);
+
+            // ArrayList에 add
             movies.add(new Movies(ids[i], "CGV", title, title_en, genre, storyline, release_date, age_limit, score, ticket_sales, running_time));
         }
         return movies;
     }
 
+
+    private String changeQuote(String str)
+    {
+        if (str.contains("'")) str = str.replace("'", "’");
+
+        return str;
+    }
 
     private String parseToText(String html, String tag)
     {
