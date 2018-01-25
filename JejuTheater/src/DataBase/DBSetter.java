@@ -60,14 +60,6 @@ public class DBSetter extends DBBase {
 
     public static void main(String args[]){
         DBSetter dbSetter = DBSetter.getInstance();
-//        ArrayList<ArrayList<String>> xxx = new ArrayList<>();
-//        ArrayList<String> yyy = new ArrayList<>();
-//        yyy.add("CGV제주1");
-//        yyy.add("2018-01-17 16:00:00");
-//        yyy.add("55");
-//        yyy.add("testid");
-//        yyy.add("CGV");
-//        xxx.add(yyy);
 
         ArrayList<ArrayList<String>> xxx2 = new ArrayList<>();
         ArrayList<String> yyy2 = new ArrayList<>();
