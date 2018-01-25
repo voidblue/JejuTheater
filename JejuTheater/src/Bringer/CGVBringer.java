@@ -35,7 +35,8 @@ public class CGVBringer implements Bring {
     public ArrayList<ArrayList> bring() {
         ArrayList<ArrayList> lists = new ArrayList<>();
 
-        lists.add(getMovies());
+        getMovies();
+//        lists.add(getMovies());
 //        lists.add(getSchedules(JEJU));
 //        lists.add(getSchedules(JEJU_NOHYENG));
 
@@ -109,7 +110,6 @@ public class CGVBringer implements Bring {
 
 
                         String seat_left = parseToText(target, "span:not(.hidden)");
-                        System.out.println(seat_left);
 
                         if(seat_left.equals("마감")){
                             seat_left = "0";
@@ -139,32 +139,54 @@ public class CGVBringer implements Bring {
             moreList.click();
             return driver;
         }), "http://www.cgv.co.kr/movies/?lt=1&ft=0");
+
         String[] ids = getIds(html);
-        System.out.println(html);
+
         // id 개수만큼 반복
         for (int i = 0; i < ids.length; i++) {
+            String result, str;
+            String[] str_array;
+
             String url_pro = "http://www.cgv.co.kr/movies/detail-view/?midx=";
             String html_movie = crawler.crawl(new JsoupCralwer(), url_pro + ids[i]);
 
             String title = parseToText(html_movie, ".title strong");
             String title_en = parseToText(html_movie, ".title p");
 
-            String dtTemp = parseToText(html_movie, ".spec dt");
-            String TempString = dtTemp.split("장르 : ")[1];
-            String genre = TempString.split(" /")[0];
-            String storyline = parseToText(html_movie, ".sect-story-movie");
-            storyline = storyline.replace("'" , "\\\'");
-            String release_date = parseToText(html_movie, ".spec .on");
-            String[] tempdates = release_date.split(" ");
-            release_date = tempdates[tempdates.length-1];
-            String basic = parseToText(html_movie, ".spec .on");
-            String age_limit = basic.split(",")[0];
+            result = parseToText(html_movie, ".spec dt");
+            str = result.split("장르 : ")[1];
+            String genre = str.split(" /")[0];
+
+            result = parseToText(html_movie, ".sect-story-movie");
+            String storyline = result.replace("'" , "\\\'");
+
+            result = parseToText(html_movie, ".spec .on");
+            str_array = result.split(" ");
+            String release_date = str_array[str_array.length-1];
+
+            result = parseToText(html_movie, ".spec");
+            System.out.println(result);
+            str = result.split("기본 : ")[1];
+            String age_limit = str.split(",")[0];
 //            String running_time = basic.split(",")[1].substring(1);
+
             String score = parseToText(html_movie, ".egg-gage:first-of-type .percent");
+
             String ticket_sales = parseToText(html_movie, ".score .percent span:not(.percent)");
 
             // TODO: ArrayList에 add
-            movies.add(new Movies(ids[i], "CGV", title, title_en, genre, storyline, release_date, "", score, ticket_sales));
+//            movies.add(new Movies(ids[i], "CGV", title, title_en, genre, storyline, release_date, "", score, ticket_sales));
+            System.out.println("-----------------------------------------------------");
+            System.out.println(ids[i]);
+            System.out.println(title);
+            System.out.println(title_en);
+            System.out.println(genre);
+            System.out.println(storyline);
+            System.out.println(release_date);
+            System.out.println(age_limit); // 배우로 나옴
+            System.out.println(score);
+            System.out.println(ticket_sales);
+            System.out.println("-----------------------------------------------------");
         }
         return movies;
     }
@@ -200,7 +222,6 @@ public class CGVBringer implements Bring {
         {
             String str = movielist.get(i).toString();
             String href = parser.getAttr(str, "a", "href");
-            System.out.println(href);
             ids[i] = href.substring(href.length()-5);
         }
 
