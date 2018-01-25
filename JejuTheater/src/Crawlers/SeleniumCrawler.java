@@ -22,16 +22,10 @@ public class SeleniumCrawler implements Crawl {
     Pager pager;
 
     public SeleniumCrawler(Pager pager) {
-
-//        FirefoxOptions options = new FirefoxOptions();
-//        options.addArguments("headless","window-size=1920x1080", "disable-gpu");
-//        driver = new FirefoxDriver();
-
         this.pager = pager;
         FirefoxBinary firefoxBinary = new FirefoxBinary();
         String path = System.getProperty("user.dir");
-        System.setProperty("webdriver.gecko.driver", path + "/driver/geckodriver");
-
+        System.setProperty("webdriver.gecko.driver", path + "/driver/geckodriver.exe");
 
         System.out.println(path);
 
@@ -39,18 +33,14 @@ public class SeleniumCrawler implements Crawl {
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         firefoxOptions.setBinary(firefoxBinary);
         driver = new FirefoxDriver(firefoxOptions);
-//        driver = new FirefoxDriver();
     }
 
     @Override
     public String crawl(String url) {
-//        driver.get(url);
-//        System.out.println(driver.getPageSource());
         String httpDocument;
         try {
             driver.get(url);
             driver = pager.paging(driver);
-            System.out.println(driver.getPageSource());
         } finally {
             httpDocument = driver.getPageSource();
             driver.quit();

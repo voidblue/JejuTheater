@@ -35,9 +35,8 @@ public class CGVBringer implements Bring {
     public ArrayList<ArrayList> bring() {
         ArrayList<ArrayList> lists = new ArrayList<>();
 
-        getMovies();
-//        lists.add(getMovies());
-//        lists.add(getSchedules(JEJU));
+        lists.add(getMovies());
+        lists.add(getSchedules(JEJU));
 //        lists.add(getSchedules(JEJU_NOHYENG));
 
         return lists;
@@ -154,8 +153,14 @@ public class CGVBringer implements Bring {
             String title_en = parseToText(html_movie, ".title p");
 
             result = parseToText(html_movie, ".spec dt");
-            str = result.split("장르 : ")[1];
-            String genre = str.split(" /")[0];
+            str = result.split("장르 :")[1];
+            String genre;
+            try{
+                genre = str.split(" /")[0].substring(1);
+            } catch (Exception e)
+            {
+                genre = str.split(" /")[0];
+            }
 
             result = parseToText(html_movie, ".sect-story-movie");
             String storyline = result.replace("'" , "\\\'");
@@ -165,28 +170,16 @@ public class CGVBringer implements Bring {
             String release_date = str_array[str_array.length-1];
 
             result = parseToText(html_movie, ".spec");
-            System.out.println(result);
             str = result.split("기본 : ")[1];
             String age_limit = str.split(",")[0];
-//            String running_time = basic.split(",")[1].substring(1);
+            String running_time = str.split(",")[1].substring(1,4);
 
             String score = parseToText(html_movie, ".egg-gage:first-of-type .percent");
 
             String ticket_sales = parseToText(html_movie, ".score .percent span:not(.percent)");
 
             // TODO: ArrayList에 add
-//            movies.add(new Movies(ids[i], "CGV", title, title_en, genre, storyline, release_date, "", score, ticket_sales));
-            System.out.println("-----------------------------------------------------");
-            System.out.println(ids[i]);
-            System.out.println(title);
-            System.out.println(title_en);
-            System.out.println(genre);
-            System.out.println(storyline);
-            System.out.println(release_date);
-            System.out.println(age_limit); // 배우로 나옴
-            System.out.println(score);
-            System.out.println(ticket_sales);
-            System.out.println("-----------------------------------------------------");
+            movies.add(new Movies(ids[i], "CGV", title, title_en, genre, storyline, release_date, age_limit, score, ticket_sales, running_time));
         }
         return movies;
     }
