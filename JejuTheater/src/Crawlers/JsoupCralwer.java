@@ -20,8 +20,8 @@ public class JsoupCralwer implements Crawl {
 //            httpdocument = (Document) Jsoup.connect(url).m
         } catch (IOException e) {
 //            System.out.println(e.getMessage());
-        }
 
+        }
         return httpdocument.outerHtml();
     }
 }
