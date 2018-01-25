@@ -1,6 +1,7 @@
 package Bringer;
 
 import Crawlers.JsoupCralwer;
+import Crawlers.SeleniumCrawler;
 import Interface.Bring;
 import Interface.Crawl;
 import Parsers.JsoupParser;
@@ -9,9 +10,11 @@ import TheaterData.Schedules;
 import Utils.Crawler;
 import Utils.Parser;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class CGVBringer implements Bring {
@@ -31,8 +34,8 @@ public class CGVBringer implements Bring {
         ArrayList<ArrayList> lists = new ArrayList<>();
 
         lists.add(getMovies());
-        lists.add(getSchedules(JEJU));
-        lists.add(getSchedules(JEJU_NOHYENG));
+//        lists.add(getSchedules(JEJU));
+//        lists.add(getSchedules(JEJU_NOHYENG));
 
         return lists;
     }
@@ -67,6 +70,8 @@ public class CGVBringer implements Bring {
             ArrayList schedule_set = parseToList(html, ".sect-showtimes ul li .col-times");
             for (int count_movie = 0; count_movie < schedule_set.size(); count_movie++) {
                 target = getTarget(schedule_set, count_movie);
+                String movie_id = parser.getAttr(target, ".info-movie a", "href");
+                movie_id = movie_id.substring(movie_id.length()-5);;
                 String movie_titie = parseToText(target, ".info-movie a strong");
                 ArrayList screen_set = parseToList(target, ".col-times .type-hall");
 
@@ -74,16 +79,45 @@ public class CGVBringer implements Bring {
                 for (int count_screen = 0; count_screen < screen_set.size(); count_screen++) {
                     target = getTarget(screen_set, count_screen);
                     String screen_number = parseToText(target, ".info-hall ul li:nth-child(2)");
+                    screen_number = screen_number.substring(0,1);
+                    String theaterName = "CGV"+theater_name + screen_number;
                     ArrayList time_set = parseToList(target,".type-hall div:nth-child(2) ul li");
 
                     // 상영시간 수만큼 반복
                     for (int count_showtime = 0; count_showtime < time_set.size(); count_showtime++) {
                         target = getTarget(time_set, count_showtime);
                         String show_time = parseToText(target, "em");
-                        String seat_left = parseToText(target, "span:not(.hidden)");
 
+                        SimpleDateFormat timeParser = new SimpleDateFormat("hh:mm");
+                        SimpleDateFormat dateParser = new SimpleDateFormat("yyyyMMdd");
+                        Date tempDate = null;
+                        Date tempTime = null;
+                        try {
+                            tempDate = dateParser.parse(date);
+                            tempTime = timeParser.parse(show_time);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+                        if (Integer.parseInt(date.substring(6,8)) >= 24){
+                            tempDate.setDate(tempDate.getDate() + 1);
+                        }
+                        String time = (tempDate.getYear()+1900) +"-" + (tempDate.getMonth()+1) + "-" + tempDate.getDate()+ " " +
+                                    tempTime.getHours() + ":" + tempTime.getMinutes();
+
+
+                        String seat_left = parseToText(target, "span:not(.hidden)");
+                        System.out.println(seat_left);
+
+                        if(seat_left.equals("마감")){
+                            seat_left = "0";
+                        }else if (seat_left.substring(0,3).equals("준비중")){
+                            seat_left = "NULL";
+                        }else{
+                            seat_left = seat_left.substring(4,6);
+                        }
                         // ArrayList에 add (-> onedaySchedules)
-                        onedaySchedules.add(new Schedules(theater_name, screen_number, month, day, day_of_week, show_time, movie_titie, seat_left));
+                        onedaySchedules.add(new Schedules(theaterName, time, seat_left, movie_id, "CGV"));
                     }
                 }
             }
@@ -98,9 +132,9 @@ public class CGVBringer implements Bring {
     {
         ArrayList<Movies> movies = new ArrayList<Movies>();
 
-        String html = crawler.crawl(new JsoupCralwer(), "http://www.cgv.co.kr/movies/?lt=1&ft=1");
+        String html = crawler.crawl(new SeleniumCrawler(), "http://www.cgv.co.kr/movies/?lt=1&ft=0");
         String[] ids = getIds(html);
-
+        System.out.println(html);
         // id 개수만큼 반복
         for (int i = 0; i < ids.length; i++) {
             String url_pro = "http://www.cgv.co.kr/movies/detail-view/?midx=";
@@ -108,20 +142,27 @@ public class CGVBringer implements Bring {
 
             String title = parseToText(html_movie, ".title strong");
             String title_en = parseToText(html_movie, ".title p");
-            String genre = parseToText(html_movie, ".spec dt:nth-last-of-type(3)").substring(5);
+
+            String dtTemp = parseToText(html_movie, ".spec dt");
+            String TempString = dtTemp.split("장르 : ")[1];
+            String genre = TempString.split(" /")[0];
             String storyline = parseToText(html_movie, ".sect-story-movie");
-            String release_date = parseToText(html_movie, ".spec .on:last-of-type");
-            String basic = parseToText(html_movie, ".spec .on:nth-last-of-type(2)");
+            storyline = storyline.replace("'" , "\\\'");
+            String release_date = parseToText(html_movie, ".spec .on");
+            String[] tempdates = release_date.split(" ");
+            release_date = tempdates[tempdates.length-1];
+            String basic = parseToText(html_movie, ".spec .on");
             String age_limit = basic.split(",")[0];
-            String running_time = basic.split(",")[1].substring(1);
-            String score = parseToText(html_movie, ".score .percent span:not(.percent)");
-            String ticket_sales = parseToText(html_movie, ".egg-gage:first-of-type .percent");
+//            String running_time = basic.split(",")[1].substring(1);
+            String score = parseToText(html_movie, ".egg-gage:first-of-type .percent");
+            String ticket_sales = parseToText(html_movie, ".score .percent span:not(.percent)");
 
             // TODO: ArrayList에 add
-            movies.add(new Movies(title, title_en, genre, storyline, release_date, age_limit, score, ticket_sales));
+            movies.add(new Movies(ids[i], "CGV", title, title_en, genre, storyline, release_date, age_limit, score, ticket_sales));
         }
         return movies;
     }
+
 
     private String parseToText(String html, String tag)
     {
@@ -153,6 +194,7 @@ public class CGVBringer implements Bring {
         {
             String str = movielist.get(i).toString();
             String href = parser.getAttr(str, "a", "href");
+            System.out.println(href);
             ids[i] = href.substring(href.length()-5);
         }
 

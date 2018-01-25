@@ -3,6 +3,9 @@ package DataBase;
 import java.sql.*;
 
 abstract class DBBase {
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
 
     private Connection connection = null;
 
@@ -43,20 +46,26 @@ abstract class DBBase {
     protected void execute(String updatequery, String insertquery){
         PreparedStatement pstmt = null;
         int result = 0;
+        String updateError = null;
+        String insertError = null;
         try {
             pstmt = connection.prepareStatement(updatequery);
             result = pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            updateError = e.getMessage();
         }finally {
             try {
                 pstmt = connection.prepareStatement(insertquery);
                 result = pstmt.executeUpdate();
             } catch (SQLException e) {
-                e.printStackTrace();
+                insertError = updateError = e.getMessage();
             }
         }
 
         System.out.println(result);
+        if(result == 0){
+            System.out.println(ANSI_RED + updateError + ANSI_RESET);
+            System.out.println(ANSI_RED + insertError + ANSI_RESET);
+        }
     }
 }

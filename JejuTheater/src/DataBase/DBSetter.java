@@ -46,7 +46,7 @@ public class DBSetter extends DBBase {
             }
             insertValues = insertValues.substring(0, insertValues.length()-2); // 마지막 콤마(,) 제거
             insertValues += ")";
-            System.out.println(insertValues);
+            System.out.println(INSERT_MOVIE_INFO + insertValues);
 
             execute(updateValues, INSERT_MOVIE_INFO + insertValues);
         }

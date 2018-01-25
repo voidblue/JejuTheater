@@ -2,7 +2,7 @@ package TheaterData;
 
 import java.util.ArrayList;
 
-public class Movies extends ArrayList {
+public class Movies extends ArrayList<String> {
     String title;
     String title_en;
     String genre;
@@ -12,7 +12,7 @@ public class Movies extends ArrayList {
     String score;
     String ticket_sales;
 
-    public Movies(String title, String title_en, String genre, String storyline, String release_date, String age_limit, String score, String ticket_sales) {
+    public Movies(String id, String brand, String title, String title_en, String genre, String storyline, String release_date, String age_limit, String score, String ticket_sales) {
         this.title = title;
         this.title_en = title_en;
         this.genre = genre;
@@ -21,6 +21,17 @@ public class Movies extends ArrayList {
         this.age_limit = age_limit;
         this.score = score;
         this.ticket_sales = ticket_sales;
+
+        add(id);
+        add(brand);
+        add(title);
+        add(title_en);
+        add(genre);
+        add(storyline);
+        add(release_date);
+        add(age_limit);
+        add(score);
+        add(ticket_sales);
     }
 
     public String getTitle() {

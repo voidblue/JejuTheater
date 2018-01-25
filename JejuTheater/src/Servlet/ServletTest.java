@@ -18,6 +18,7 @@ public class ServletTest extends HttpServlet {
     }
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp){
+        String xxx =req.getParameter("page");
         resp.setContentType("text/html; charset=UTF-8");
         PrintWriter printWriter = null;
 
@@ -27,12 +28,12 @@ public class ServletTest extends HttpServlet {
             e.printStackTrace();
         }
 
-
         printWriter.println("<HTML><HEAD><TITLE>HelloServlet</TITLE></HEAD>");
         printWriter.println("<BODY>");
         printWriter.println("<H2> Clinet IP: " + req.getRemoteAddr() + "</H2>");
         printWriter.println("<H2> Client Host : " + req.getRemoteHost() + "</H2>");
         printWriter.println("<H2> Request URI : " + req.getRequestURI() + "</H2>");
+        printWriter.println("<H2> getPage : " + req.getParameter("page") + "</H2>");
         printWriter.println("<H2> GET TEST</H2>");
         printWriter.println("</BODY></HTML>");
     }
