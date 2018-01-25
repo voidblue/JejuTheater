@@ -32,7 +32,8 @@ abstract class DBBase {
 // stmt = connection.createStatement();
 // rs = stmt.excuteQuery(query);
 
-    protected ResultSet Select(String query){
+    //가져오는거
+    protected ResultSet select(String query){
         PreparedStatement pstmt = null;
         try {
             pstmt = connection.prepareStatement(query);
@@ -43,6 +44,8 @@ abstract class DBBase {
         return null;
     }
 
+
+    //업데이트 먼저 하고 오류날 시 (기본키 중복이 없는경우) 인서트 진행
     protected void execute(String updatequery, String insertquery){
         PreparedStatement pstmt = null;
         int result = 0;

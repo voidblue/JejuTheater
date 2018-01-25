@@ -17,9 +17,8 @@ public class JsoupCralwer implements Crawl{
         Document httpdocument = null;
         try {
             httpdocument = (Document) Jsoup.connect(url).get();
-//            httpdocument = (Document) Jsoup.connect(url).m
         }catch (IOException e){
-//            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
 
         return httpdocument.outerHtml();
