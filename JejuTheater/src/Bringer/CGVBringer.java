@@ -9,6 +9,8 @@ import TheaterData.Movies;
 import TheaterData.Schedules;
 import Utils.Crawler;
 import Utils.Parser;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -132,7 +134,11 @@ public class CGVBringer implements Bring {
     {
         ArrayList<Movies> movies = new ArrayList<Movies>();
 
-        String html = crawler.crawl(new SeleniumCrawler(), "http://www.cgv.co.kr/movies/?lt=1&ft=0");
+        String html = crawler.crawl(new SeleniumCrawler((driver) ->{
+            WebElement moreList = driver.findElement(By.className("btn-more-fontbold"));
+            moreList.click();
+            return driver;
+        }), "http://www.cgv.co.kr/movies/?lt=1&ft=0");
         String[] ids = getIds(html);
         System.out.println(html);
         // id 개수만큼 반복
@@ -158,7 +164,7 @@ public class CGVBringer implements Bring {
             String ticket_sales = parseToText(html_movie, ".score .percent span:not(.percent)");
 
             // TODO: ArrayList에 add
-            movies.add(new Movies(ids[i], "CGV", title, title_en, genre, storyline, release_date, age_limit, score, ticket_sales));
+            movies.add(new Movies(ids[i], "CGV", title, title_en, genre, storyline, release_date, "", score, ticket_sales));
         }
         return movies;
     }

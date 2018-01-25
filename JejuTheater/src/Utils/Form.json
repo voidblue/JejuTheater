@@ -3,6 +3,10 @@ Schedule:{
   Theater:{Brand:"",Name:"", Address:"", Phone:""},
   Movies:[
     {
+      Brand:"",
+      Name:"",
+      Address:"",
+      Phone:""
       Movue_ID:"",
       Movie_Name:"",
       ENG_Name:"",

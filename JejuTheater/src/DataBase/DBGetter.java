@@ -3,6 +3,9 @@ package DataBase;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class DBGetter extends DBBase{
     private static String QUERY = "SELECT * FROM brands";
@@ -16,6 +19,37 @@ public class DBGetter extends DBBase{
         resultSet = Select(QUERY);
     }
 
+    public ArrayList<HashMap<String,String>> getData(){
+        ArrayList<HashMap<String, String>> list = new ArrayList<>();
+
+
+
+        return list;
+
+    }
+    /*
+      Date:"today",
+  Theater:{Brand:"",Name:"", Address:"", Phone:""},
+  Movies:[
+    {
+      Brand:"",
+      Name:"",
+      Address:"",
+      Phone:""
+      Movue_ID:"",
+      Movie_Name:"",
+      ENG_Name:"",
+      genre:"",
+      Age:"",
+      OpenTime:"",
+      Story:"",
+      Rating:"",
+      Sales:"",
+      Date_List:[
+        ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
+    */
+
+
     //
     //
     //
@@ -26,14 +60,13 @@ public class DBGetter extends DBBase{
 
 
 
-
     public static void main(String args[]){
         DBGetter dbGetter = DBGetter.getInstance();
         try {
             dbGetter.resultSet.absolute(3);
-            System.out.println(dbGetter.resultSet.getString("moviename"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 }
+

@@ -19,14 +19,15 @@ import java.util.concurrent.TimeUnit;
 //무적 크롤러.. 동적웹에 클릭도 할수있음 다만 조금 느림
 public class SeleniumCrawler implements Crawl {
     WebDriver driver;
+    Pager pager;
 
-    public SeleniumCrawler() {
+    public SeleniumCrawler(Pager pager) {
 
 //        FirefoxOptions options = new FirefoxOptions();
 //        options.addArguments("headless","window-size=1920x1080", "disable-gpu");
 //        driver = new FirefoxDriver();
 
-
+        this.pager = pager;
         FirefoxBinary firefoxBinary = new FirefoxBinary();
         String path = System.getProperty("user.dir");
         System.setProperty("webdriver.gecko.driver", path + "/driver/geckodriver");
@@ -48,8 +49,7 @@ public class SeleniumCrawler implements Crawl {
         String httpDocument;
         try {
             driver.get(url);
-            WebElement moreList = driver.findElement(By.className("btn-more-fontbold"));
-            moreList.click();
+            driver = pager.paging(driver);
             System.out.println(driver.getPageSource());
         } finally {
             httpDocument = driver.getPageSource();
@@ -57,6 +57,5 @@ public class SeleniumCrawler implements Crawl {
         }
 
         return httpDocument;
-
     }
 }
