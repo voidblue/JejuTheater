@@ -24,7 +24,7 @@ public class BringerTest {
         ArrayList<Schedules> todaySchedule = alldaySchedules.get(0);
         Schedules firstShow = todaySchedule.get(0);
 
-        System.out.println(movie.getTitle() + movie.getTitle_en());
-        System.out.println(firstShow.getTheater() + firstShow.getDay_of_week() + firstShow.getMovie_title() + firstShow.getShow_time());
+        for(int i = 0; i < movie.size(); i++) System.out.println(movie.get(i));
+        for(int i = 0; i < firstShow.size(); i++) System.out.println(firstShow.get(i));
     }
 }
