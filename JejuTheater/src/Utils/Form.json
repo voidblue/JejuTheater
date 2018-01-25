@@ -1,41 +1,46 @@
 Schedule:{
-  Date:"today",
-  Theater:{Brand:"",Name:"", Address:"", Phone:""},
-  Movies:[
-    {
-      Movue_ID:"",
-      Movie_Name:"",
-      ENG_Name:"",
-      genre:"",
-      Age:"",
-      OpenTime:"",
-      Story:"",
-      Rating:"",
-      Sales:"",
-      Date_List:[
-        ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
-        ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
-        ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
-        ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
-        ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
-        ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
-        ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
-        ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
-        ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
-        ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
-        ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
-        ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
-        ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
-        ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
-        ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
-        ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
-        ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
-        ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
-        ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
-        ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
-        ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""}
-      ]
-    }
-  ]
+  Date:"tday",
+  Theater:{
+          Brand:"",
+          Name:"",
+          Address:"",
+          Phone:"",
+          Movies:[
+            {
+              Movue_ID:"",
+              Movie_Name:"",
+              ENG_Name:"",
+              genre:"",
+              Age:"",
+              OpenTime:"",
+              Story:"",
+              Rating:"",
+              Sales:"",
+              Date_List:[
+                ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
+                ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
+                ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
+                ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
+                ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
+                ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
+                ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
+                ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
+                ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
+                ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
+                ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
+                ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
+                ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
+                ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
+                ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
+                ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
+                ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
+                ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
+                ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
+                ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
+                ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""}
+              ]
 
-}
+             }
+
+  }]
+
