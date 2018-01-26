@@ -3,6 +3,7 @@ package Utils;
 import Crawlers.Pager;
 import DataBase.Movie;
 import DataBase.Schedule;
+import DataBase.ScreenInfo;
 import DataBase.Theater;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -66,71 +67,67 @@ public class Xml {
                 theater.appendChild(phoneNumber);
                 phoneNumber.appendChild(doc.createTextNode(t.phoneNumber));
 
-//                for (Movie m : t.getMovies()){
-//                    Element movies = doc.createElement("movie");
-//                    theater.appendChild(movies);
-//
-//                    Element movieId = doc.createElement("movieId");
-//                    movies.appendChild(movieId);
-//                    movieId.appendChild(doc.createTextNode(m.movieId));
-//
-//                    Element movieName = doc.createElement("movieName");
-//                    movies.appendChild(movieName);
-//                    movieName.appendChild(doc.createTextNode(m.movieName));
-//
-//                    Element movieNameENG = doc.createElement("movieNameENG");
-//                    movies.appendChild(movieNameENG);
-//                    movieNameENG.appendChild(doc.createTextNode(m.movieNameENG));
-//
-//                    Element genre = doc.createElement("genre");
-//                    movies.appendChild(genre);
-//                    genre.appendChild(doc.createTextNode(m.genre));
-//
-//                    Element ageLimit = doc.createElement("ageLimit");
-//                    movies.appendChild(ageLimit);
-//                    ageLimit.appendChild(doc.createTextNode(m.ageLimit));
-//
-//                    Element openDate = doc.createElement("openDate");
-//                    movies.appendChild(openDate);
-//                    openDate.appendChild(doc.createTextNode(m.openTime));
-//
-//                    Element story = doc.createElement("story");
-//                    movies.appendChild(story);
-//                    story.appendChild(doc.createTextNode(m.story));
-//
-//                    Element share = doc.createElement("share");
-//                    movies.appendChild(share);
-//                    share.appendChild(doc.createTextNode(m.share));
-//
-//                    Element sales = doc.createElement("sales");
-//                    movies.appendChild(sales);
-//                    sales.appendChild(doc.createTextNode(m.sales));
-//
-//                    for (screenInfo t2 : m.getScreenInfo){
-//                        Element timeList = doc.createElement("timeList");
-//                        movies.appendChild(timeList);
-//
-//                        Element screenId = doc.createElement("screenId");
-//                        timeList.appendChild(screenId);
-//                        screenId.appendChild(doc.createTextNode(t2.screenId));
-//
-//                        Element room = doc.createElement("room");
-//                        timeList.appendChild(room);
-//                        room.appendChild(doc.createTextNode(t2.room));
-//
-//                        Element startTime = doc.createElement("startTime");
-//                        timeList.appendChild(startTime);
-//                        startTime.appendChild(doc.createTextNode(t2.startTime);
-//
-//                        Element leftSeat = doc.createElement("leftSeat");
-//                        timeList.appendChild(leftSeat);
-//                        leftSeat.appendChild(doc.createTextNode(t2.leftSeat);
-//
-//                        Element totalSeat = doc.createElement("totalSeat");
-//                        timeList.appendChild(totalSeat);
-//                        totalSeat.appendChild(doc.createTextNode(t2.totalSeat));
-//                    }
-//                }
+                for (Movie m : t.getMovies()){
+                    Element movies = doc.createElement("movie");
+                    theater.appendChild(movies);
+
+                    Element movieId = doc.createElement("movieId");
+                    movies.appendChild(movieId);
+                    movieId.appendChild(doc.createTextNode(m.movieId));
+
+                    Element movieName = doc.createElement("movieName");
+                    movies.appendChild(movieName);
+                    movieName.appendChild(doc.createTextNode(m.movieName));
+
+                    Element movieNameENG = doc.createElement("movieNameENG");
+                    movies.appendChild(movieNameENG);
+                    movieNameENG.appendChild(doc.createTextNode(m.movieNameENG));
+
+                    Element genre = doc.createElement("genre");
+                    movies.appendChild(genre);
+                    genre.appendChild(doc.createTextNode(m.genre));
+
+                    Element ageLimit = doc.createElement("ageLimit");
+                    movies.appendChild(ageLimit);
+                    ageLimit.appendChild(doc.createTextNode(m.ageLimit));
+
+                    Element openDate = doc.createElement("openDate");
+                    movies.appendChild(openDate);
+                    openDate.appendChild(doc.createTextNode(m.openTime));
+
+                    Element story = doc.createElement("story");
+                    movies.appendChild(story);
+                    story.appendChild(doc.createTextNode(m.story));
+
+                    Element share = doc.createElement("share");
+                    movies.appendChild(share);
+                    share.appendChild(doc.createTextNode(m.share));
+
+                    for (ScreenInfo t2 : m.getScreenInfoList()){
+                        Element timeList = doc.createElement("timeList");
+                        movies.appendChild(timeList);
+
+                        Element screenId = doc.createElement("screenId");
+                        timeList.appendChild(screenId);
+                        screenId.appendChild(doc.createTextNode(t2.screenId));
+
+                        Element room = doc.createElement("room");
+                        timeList.appendChild(room);
+                        room.appendChild(doc.createTextNode(t2.screen));
+
+                        Element startTime = doc.createElement("startTime");
+                        timeList.appendChild(startTime);
+                        startTime.appendChild(doc.createTextNode(t2.startTime));
+
+                        Element leftSeat = doc.createElement("leftSeat");
+                        timeList.appendChild(leftSeat);
+                        leftSeat.appendChild(doc.createTextNode(t2.leftSeat));
+
+                        Element totalSeat = doc.createElement("totalSeat");
+                        timeList.appendChild(totalSeat);
+                        totalSeat.appendChild(doc.createTextNode(t2.totalSeat));
+                    }
+                }
             }
 
 
