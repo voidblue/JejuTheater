@@ -33,7 +33,15 @@ public class DBGetter extends DBBase{
     private DBGetter(){
     }
 
-    public ArrayList<HashMap<String,String>> getData(int page, int pagesize, int fromToday,String date, String title){
+    public ArrayList<HashMap<String,String>> getData(String strpage, String strpagesize, String strfromToday,String date, String title){
+        int page;
+        int pagesize;
+        int fromToday;
+
+        page = (strpage == null)? 0 : Integer.parseInt(strpage);
+        pagesize = (strpagesize == null) ? 100 : Integer.parseInt(strpagesize);
+        fromToday = (strfromToday == null) ? 0 : Integer.parseInt(strfromToday);
+
         String where = " WHERE";
         boolean noWhere = true;
         if(date != null) {
@@ -115,10 +123,11 @@ public class DBGetter extends DBBase{
 
     public static void main(String args[]){
         DBGetter dbGetter = DBGetter.getInstance();
-        ArrayList xxx = dbGetter.getData(1,100, 0, null, null);
+        ArrayList xxx = dbGetter.getData("1","100", "0", null, null);
         System.out.println(xxx.toString().replace("}", "}\n"));
 
-        Schedule xxx2 = new Schedule(xxx);
+        DataForm dataForm = new DataForm(xxx);
+        dataForm.toXmlFormatString();
 
     }
 }

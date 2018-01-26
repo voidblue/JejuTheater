@@ -37,8 +37,8 @@ Schedule:{
                 ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
                 ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
                 ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""},
-                ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""}
-              ]
-             }
+ShowTime:{ScreenID:"", Screen:"", Time:"", Left_Seat:"", Total_Seat:""}
+]
+}
 
-  }]
+}]

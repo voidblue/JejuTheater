@@ -52,7 +52,7 @@ public class CGVBringer implements Bring {
         // 날짜 개수만큼 반복
         while(true) {
             ArrayList<Schedules> onedaySchedules = new ArrayList<Schedules>();
-
+            int stopFlag = 0;
             String date = getDate(repetitions++);
             String url = "" +
                     "http://www.cgv.co.kr/common/showtimes/iframeTheater.aspx?areacode=206,04,06&theatercode="
@@ -66,7 +66,12 @@ public class CGVBringer implements Bring {
             day = parseToText(date_set, "strong");
             day_of_week = parseToText(date_set, "em");
 
-            if (!isEqualDate(date, month, day)) break;
+            if (!isEqualDate(date, month, day)){
+                stopFlag++;
+                continue;
+            }else if (stopFlag > 3){
+                break;
+            }
 
             // 영화 개수만큼 반복
             String target;

@@ -21,7 +21,7 @@ public class Movie{
         HashMap<String, String> item = arrayList.get(0);
         this.movieId = item.get("movieId");
         this.movieName = item.get("movieName");
-        this.movieNameENG = item.get("movie");
+        this.movieNameENG = (item.get("movieNameENG") == null)? "NULL" : item.get("movieNameENG");
         this.genre = item.get("genre");
         this.ageLimit = item.get("ageLimit");
         this.openTime = item.get("releaseDate");
@@ -29,7 +29,7 @@ public class Movie{
         this.rating = item.get("rating");
         this.share = item.get("share");
         this.duration = item.get("durationTime");
-
+        System.out.println(movieId + movieName + movieNameENG + genre + ageLimit + openTime + rating + share + duration);
         this.ScreenInfoList = new ArrayList<ScreenInfo>();
 
         for (HashMap<String, String> e : arrayList)
@@ -46,6 +46,7 @@ public class Movie{
     }
 
     public ArrayList<ScreenInfo> getScreenInfoList() {
+        System.out.println(ScreenInfoList.size());
         return ScreenInfoList;
     }
 }

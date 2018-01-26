@@ -53,11 +53,6 @@ public class DBSetter extends DBBase {
     }
 
 
-
-
-    public void run(){
-    }
-
     public static void main(String args[]){
         DBSetter dbSetter = DBSetter.getInstance();
 
