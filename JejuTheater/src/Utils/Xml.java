@@ -28,7 +28,6 @@ import java.util.Properties;
 public class Xml {
     Document doc;
     public Xml(ArrayList<Schedule> arrayList){
-        doc = null;
         DocumentBuilderFactory factory = null;
         factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = null;
@@ -129,18 +128,12 @@ public class Xml {
                     }
                 }
             }
-
-
-
         }
 
 
+    }
 
-
-
-
-
-
+    public String toXmlFormatString(){
 
         TransformerFactory tr_factory = TransformerFactory.newInstance();
         String xmlStr = "";
@@ -160,7 +153,7 @@ public class Xml {
         {
             e.printStackTrace();
         }
-
+        return xmlStr;
     }
     public static void main(String ares[]){
 //        Xml xml = new Xml();

@@ -25,16 +25,20 @@ public class Theater{
 
         for (HashMap<String, String> e : arrayList){
             String movieId = e.get("movieId");
-
             int before = movieIds.size();
             movieIds.add(movieId);
             int after = movieIds.size();
-
             if(before != after){
                 arrays.put(movieId, new ArrayList());
             }
             arrays.get(movieId).add(e);
         }
+        for (String movieId : movieIds){
+//            System.out.println(movieId);
+            movies.add(new Movie(arrays.get(movieId)));
+//            System.out.println(movies.size());
+        }
+
     }
 
     public ArrayList<Movie> getMovies() {

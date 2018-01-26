@@ -23,27 +23,32 @@ public class Servlet extends HttpServlet {
     }
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp){
-        int page = Integer.parseInt(req.getParameter("page"));
-        int pagesize = Integer.parseInt(req.getParameter("pagesize"));
-        int formToday = Integer.parseInt(req.getParameter("fromToday"));
+        String page = req.getParameter("page");
+        String pagesize = req.getParameter("pagesize");
+        String fromToday = req.getParameter("fromToday");
         String date = req.getParameter("date");
         String title = req.getParameter("title");
 
-
-        resp.setContentType("text/xml; charset=UTF-8");
+        resp.setContentType("text/html; charset=UTF-8");
         PrintWriter printWriter = null;
+
+        DBGetter dbGetter = DBGetter.getInstance();
+        ArrayList<java.util.HashMap<String, String>> data = dbGetter.getData(page,pagesize,fromToday,date,title);
+        DataForm dataForm = new DataForm(data);
 
         try {
             printWriter = resp.getWriter();
+            printWriter.println(dataForm.toXmlFormatString());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        DBGetter dbGetter = DBGetter.getInstance();
-        ArrayList data = dbGetter.getData(page,pagesize,formToday,date,title);
-        DataForm dataForm = new DataForm(data);
 
 
-        printWriter.print(dataForm.toXml());
+//        printWriter.println(page);
+//        printWriter.println(pagesize);
+//        printWriter.println(fromToday);
+//        printWriter.println(date);
+//        printWriter.println(title);
 //        printWriter.println("<HTML><HEAD><TITLE>HelloServlet</TITLE></HEAD>");
 //        printWriter.println("<BODY>");
 //        printWriter.println("<H2> Clinet IP: " + req.getRemoteAddr() + "</H2>");
@@ -54,36 +59,6 @@ public class Servlet extends HttpServlet {
 //        printWriter.println("</BODY></HTML>");
     }
 
-    public static void main(String args[]){
-        DBGetter dbGetter = DBGetter.getInstance();
-        ArrayList xxx = dbGetter.getData(1,450, 1, null, null);
-        System.out.println(xxx.toString().replace("}", "}\n"));
 
-        DataForm dataForm = new DataForm(xxx);
-        dataForm.toXml();
 
-    }
-
-//    public void doPost(HttpServletRequest req, HttpServletResponse resp){
-//        resp.setContentType("text/html; charset=UTF-8");
-//        PrintWriter printWriter = null;
-//
-//        try {
-//            printWriter = resp.getWriter();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        printWriter.println("<HTML><HEAD><TITLE>HelloServlet</TITLE></HEAD>");
-//        printWriter.println("<BODY>");
-//        printWriter.println("<H2> Clinet IP: " + req.getRemoteAddr() + "</H2>");
-//        printWriter.println("<H2> Client Host : " + req.getRemoteHost() + "</H2>");
-//        printWriter.println("<H2> Request URI : " + req.getRequestURI() + "</H2>");
-//        printWriter.println("<H2> POST TEST</H2>");
-//        printWriter.println("</BODY></HTML>");
-//    }
-
-//    public void service(HttpServletRequest request, HttpServletResponse response){
-//        getServletContext().log("service() called");
-////        doGet(request, response);
-//    }
 }

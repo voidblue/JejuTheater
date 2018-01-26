@@ -1,8 +1,6 @@
 package DataBase;
 
 import Utils.Xml;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,8 +12,6 @@ public class DataForm {
     private ArrayList<Schedule> schedules;
 
     public DataForm(ArrayList<HashMap<String, String>> arrayList){
-
-
         schedules = new ArrayList<>();
         dates = new HashSet<>();
         arrays = new HashMap<>();
@@ -39,9 +35,9 @@ public class DataForm {
         }
     }
 
-    public Document toXml(){
+    public String toXmlFormatString(){
         Xml xml = new Xml(schedules);
 
-        return null;
+        return xml.toXmlFormatString();
     }
 }
