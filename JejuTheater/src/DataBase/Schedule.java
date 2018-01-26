@@ -39,5 +39,10 @@ public class Schedule{
         for (String name : theaterNames){
             theaters.add(new Theater(arrays.get(name)));
         }
+
+    }
+
+    public ArrayList<Theater> getThearters(){
+        return theaters;
     }
 }

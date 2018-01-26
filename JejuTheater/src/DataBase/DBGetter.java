@@ -117,7 +117,8 @@ public class DBGetter extends DBBase{
         ArrayList xxx = dbGetter.getData(1,100, 0, null, null);
         System.out.println(xxx.toString().replace("}", "}\n"));
 
-        Schedule xxx2 = new Schedule(xxx);
+        DataForm dataForm = new DataForm(xxx);
+        dataForm.toXml();
 
     }
 }
