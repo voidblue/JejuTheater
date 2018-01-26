@@ -34,13 +34,13 @@ public class Movie{
 
         for (HashMap<String, String> e : arrayList)
         {
-            ScreenInfo screenInfo = new ScreenInfo();
             String screenID = e.get("screenId");
             String screen = e.get("screenNum");
             String time = e.get("startTime");
             String leftSeat = e.get("leftSeat");
             String totalSeat = e.get("totalSeat");
 
+            ScreenInfo screenInfo = new ScreenInfo(screenID, screen, time, leftSeat, totalSeat);
             ScreenInfoList.add(screenInfo);
         }
     }
