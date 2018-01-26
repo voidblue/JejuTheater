@@ -23,8 +23,7 @@ import java.util.Properties;
 
 public class Xml {
     Document doc;
-    public Xml(ArrayList<HashMap<String, String>> arrayList){
-
+    public Xml(ArrayList<Schedule> arrayList){
         doc = null;
         DocumentBuilderFactory factory = null;
         factory = DocumentBuilderFactory.newInstance();
@@ -35,31 +34,49 @@ public class Xml {
             e.printStackTrace();
         }
         doc = builder.newDocument();
-        Element schedule = doc.createElement("schedule");
-        doc.appendChild(schedule);
 
-        Element date = doc.createElement("date");
-        schedule.appendChild(date);
-        date.appendChild(doc.createTextNode("date"));
+        for(Schedule s : arrayList){
 
-        Element theater = doc.createElement("theater");
-        schedule.appendChild(theater);
+            Element schedule = doc.createElement("schedule");
+            doc.appendChild(schedule);
 
-        Element brand = doc.createElement("brand");
-        theater.appendChild(brand);
-        brand.appendChild(doc.createTextNode("brand"));
+            Element date = doc.createElement("date");
+            schedule.appendChild(date);
+            date.appendChild(doc.createTextNode(s.date));
 
-        Element theaterName = doc.createElement("theaterName");
-        theater.appendChild(theaterName);
-        theaterName.appendChild(doc.createTextNode("theaterName"));
+            for (Theater t : s.getMovies){
+                Element theater = doc.createElement("theater");
+                schedule.appendChild(theater);
 
-        Element address = doc.createElement("address");
-        theater.appendChild(address);
-        address.appendChild(doc.createTextNode("address"));
+                Element brand = doc.createElement("brand");
+                theater.appendChild(brand);
+                brand.appendChild(doc.createTextNode(t.brand));
 
-        Element phoneNumber = doc.createElement("phoneNumber");
-        theater.appendChild(phoneNumber);
-        phoneNumber.appendChild(doc.createTextNode("phoneNumber"));
+                Element theaterName = doc.createElement("theaterName");
+                theater.appendChild(theaterName);
+                theaterName.appendChild(doc.createTextNode(t.theaterName));
+
+                Element address = doc.createElement("address");
+                theater.appendChild(address);
+                address.appendChild(doc.createTextNode(t.address));
+
+                Element phoneNumber = doc.createElement("phoneNumber");
+                theater.appendChild(phoneNumber);
+                phoneNumber.appendChild(doc.createTextNode(t.phoneNumber));
+
+                for (Movie m : t.TimeList){
+
+                }
+            }
+
+
+
+        }
+
+
+
+
+
 
         Element movies = doc.createElement("movies");
         theater.appendChild(movies);
