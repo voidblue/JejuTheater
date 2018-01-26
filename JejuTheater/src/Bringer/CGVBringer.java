@@ -32,17 +32,17 @@ public class CGVBringer implements Bring {
     }
 
     @Override
-    public ArrayList<ArrayList> bring() {
+    public ArrayList<ArrayList> getAllSchedules() {
         ArrayList<ArrayList> lists = new ArrayList<>();
 
-        lists.add(getMovies());
         lists.add(getSchedules(JEJU));
         lists.add(getSchedules(JEJU_NOHYENG));
 
         return lists;
     }
 
-    private ArrayList<ArrayList> getSchedules(String theater)
+    @Override
+    public ArrayList<ArrayList> getSchedules(String theater)
     {
         System.out.println("Schedule 받는 중 ... ");
         ArrayList<ArrayList> alldaySchedules = new ArrayList<ArrayList>();
@@ -130,7 +130,8 @@ public class CGVBringer implements Bring {
         return alldaySchedules;
     }
 
-    private ArrayList<Movies> getMovies()
+    @Override
+    public ArrayList<Movies> getMovies()
     {
         System.out.println("Movie 받는 중 ... ");
         ArrayList<Movies> movies = new ArrayList<Movies>();
