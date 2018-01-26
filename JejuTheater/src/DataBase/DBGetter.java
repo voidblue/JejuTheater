@@ -85,6 +85,7 @@ public class DBGetter extends DBBase{
                 hashMap.put("address", resultSet.getString("address"));
                 hashMap.put("phone", resultSet.getString("phone"));
                 hashMap.put("durationTime", resultSet.getString("runTime"));
+                hashMap.put("leftSeat", resultSet.getString("leftSeat"));
                 list.add(hashMap);
                 if (resultSet.next() && i < page*pagesize) {
                     i++;
