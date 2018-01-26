@@ -37,7 +37,7 @@ public class CGVBringer implements Bring {
 
         lists.add(getMovies());
         lists.add(getSchedules(JEJU));
-//        lists.add(getSchedules(JEJU_NOHYENG));
+        lists.add(getSchedules(JEJU_NOHYENG));
 
         return lists;
     }
