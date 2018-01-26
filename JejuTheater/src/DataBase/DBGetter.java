@@ -114,7 +114,7 @@ public class DBGetter extends DBBase{
 
     public static void main(String args[]){
         DBGetter dbGetter = DBGetter.getInstance();
-        ArrayList xxx = dbGetter.getData(1,100, 0, null, null);
+        ArrayList xxx = dbGetter.getData(1,450, 1, null, null);
         System.out.println(xxx.toString().replace("}", "}\n"));
 
         DataForm dataForm = new DataForm(xxx);
